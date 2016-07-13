@@ -20,8 +20,8 @@ class BinaryTree
   end
 
   def build_tree(array)
-  	tree = []
-  	array.each { |element| insert_in_tree(element, tree) }
+  	@tree = []
+  	array.each { |element| insert_in_tree(element, @tree) }
   	# tree.each do |branch|
   	#   p branch
   	# end
@@ -29,27 +29,53 @@ class BinaryTree
   end
 
   def insert_in_tree(element, tree)
-  	tree << Node.new(element) if tree.empty?
-  	root = tree.first
-  	tree.each do |branch|
+  	@tree << Node.new(element) if @tree.empty?
+  	@root = @tree.first
+
+  	@tree.each do |branch|
 
   	  if element < branch.value && branch.left_child.nil?
   	  	node = Node.new(element, branch)
-  	  	tree << node
+  	  	@tree << node
   	  	branch.left_child = node
   	  	break
   	  end
 
   	  if element > branch.value && branch.right_child.nil?
   	  	node = Node.new(element, branch)
-  	  	tree << node
+  	  	@tree << node
   	  	branch.right_child = node
   	  	break
   	  end
 
   	end
   	
-  	
+  end
+
+  def breadth_first(target)
+  	queue = []
+  	visited = []
+
+  	@tree.each do |branch|
+  	  queue.unshift(branch)
+  	  element = queue.first
+  	  visited << element 
+  	  return element if element.value == target
+
+  	  if element.right_child && !visited.include?(element.right_child)
+  	  	right = element.right_child
+  	  	visited << right
+  	  	return right if right.value == target
+  	  end
+
+  	  if element.left_child && !visited.include?(element.left_child)
+  	  	left = element.left_child
+  	  	visited << left
+  	  	return left if left.value == target
+  	  end
+  	end
+
+  	return nil
 
   end
 
@@ -58,4 +84,5 @@ end
 bn = BinaryTree.new
 bn.build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]).inspect
 # puts bn.tree
+puts bn.breadth_first(7)
 
