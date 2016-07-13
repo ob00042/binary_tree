@@ -110,11 +110,18 @@ class BinaryTree
   	  	
   end
 
+  def dfs_rec(target, element = @tree.first)
+  	return element if element.value == target
+  	dfs_rec(target, element.left_child) if element.left_child
+  	dfs_rec(target, element.right_child) if element.right_child
+  end
+
 end
 
 bn = BinaryTree.new
 bn.build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]).inspect
 # puts bn.tree
-puts bn.breadth_first(67).inspect
-puts bn.depth_first(67).inspect
+# puts bn.breadth_first(67).inspect
+# puts bn.depth_first(67).inspect
+puts bn.dfs_rec(7).inspect
 
