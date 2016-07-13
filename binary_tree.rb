@@ -21,35 +21,41 @@ class BinaryTree
 
   def build_tree(array)
   	tree = []
-  	array.each { |element| insert_in_tree(element, tree) }	
+  	array.each { |element| insert_in_tree(element, tree) }
+  	# tree.each do |branch|
+  	#   p branch
+  	# end
+  	# p tree
   end
 
   def insert_in_tree(element, tree)
   	tree << Node.new(element) if tree.empty?
   	root = tree.first
   	tree.each do |branch|
+
   	  if element < branch.value && branch.left_child.nil?
   	  	node = Node.new(element, branch)
   	  	tree << node
   	  	branch.left_child = node
+  	  	break
   	  end
 
   	  if element > branch.value && branch.right_child.nil?
   	  	node = Node.new(element, branch)
   	  	tree << node
   	  	branch.right_child = node
+  	  	break
   	  end
+
   	end
-  	tree.each do |branch|
-  	  print branch.value
-  	  p ""
-  	  print branch.parent
-  	end
+  	
+  	
+
   end
 
 end
 
 bn = BinaryTree.new
 bn.build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]).inspect
-puts bn.tree
+# puts bn.tree
 
