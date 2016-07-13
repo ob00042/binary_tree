@@ -79,10 +79,42 @@ class BinaryTree
 
   end
 
+  def depth_first(target)
+  	stack = []
+  	visited = []
+
+  	element = @tree.first
+  	stack << element
+  	visited << element
+
+  	while !stack.empty?
+  	  element = stack.last
+	  if element.value == target
+	    return element
+	  elsif element.left_child && !visited.include?(element.left_child)
+	    left = element.left_child
+	    stack << left
+	    visited << left
+	    return left if left.value == target
+	  elsif element.right_child && !visited.include?(element.right_child)
+	    right = element.right_child
+	    stack << right
+	    visited << right
+	    return right if right.value == target
+	  else
+	  	stack.pop
+	  end
+	end
+
+	return nil	  	
+  	  	
+  end
+
 end
 
 bn = BinaryTree.new
 bn.build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]).inspect
 # puts bn.tree
-puts bn.breadth_first(7)
+puts bn.breadth_first(67).inspect
+puts bn.depth_first(67).inspect
 
